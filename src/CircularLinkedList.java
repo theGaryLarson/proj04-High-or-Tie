@@ -115,8 +115,14 @@ public class CircularLinkedList<E> implements Iterable<E>  {
 
         public void remove() {
             //Removes from the underlying collection the last element returned by this iterator
+            //removes what previous is pointing at
             if (removeOk) {
-                prev.next = curr.next;
+                if (curr == null) {
+                    prev.next = null;
+                } else {
+                    prev.next = curr.next;
+                }
+
                 size--;
             }
         }

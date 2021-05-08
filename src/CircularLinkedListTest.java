@@ -47,8 +47,8 @@ class CircularLinkedListTest {
         myInts.add(1);
         Iterator<Integer> iter = myInts.iterator();
 
-        for (int i = 0; i < 5; i++) {
-             int x = iter.next();
+        for (int i = 0; i < 10; i++) {
+            System.out.println(iter.next());
             iter.remove();
         }
     }
