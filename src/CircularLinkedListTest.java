@@ -153,7 +153,7 @@ class CircularLinkedListTest {
 
 
     @Test
-    void iterator() {
+    void iteratorNext() {
         CircularLinkedList<Integer> myInts = new CircularLinkedList<>();
         myInts.add(5);
         myInts.add(4);
@@ -167,6 +167,27 @@ class CircularLinkedListTest {
         assertEquals(5,iter.next());
         assertEquals(4,iter.next());
         assertEquals(3,iter.next());
+    }
+
+
+    @Test
+    void iteratorRemove() {
+        CircularLinkedList<Integer> myInts = new CircularLinkedList<>();
+        myInts.add(5);
+        myInts.add(4);
+        myInts.add(3);
+        Iterator<Integer> iter = myInts.iterator();
+
+       iter.next();
+       iter.remove();
+        iter.next();
+        iter.remove();
+        iter.next();
+        iter.remove();
+        iter.next();
+        iter.remove();
+        System.out.println();
+
     }
 
 

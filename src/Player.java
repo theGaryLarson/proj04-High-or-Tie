@@ -5,9 +5,24 @@
  */
 public class Player {
     /** name of the player */
-    private String name;
+    private final String name;
     /** total strikes during game */
     private int totalStrikes;
+
+
+    /**
+     * constructs a player
+     * @param name name of the player
+     */
+    public Player(String name) {
+        this.name = name;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
 
     /**
      * increase player's strike count by one.

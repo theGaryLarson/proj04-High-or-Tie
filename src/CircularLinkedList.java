@@ -217,8 +217,9 @@ public class CircularLinkedList<E> implements Iterable<E>  {
      */
     public class CircularLinkedListIterator implements Iterator<E> {
         Node<E> curr;
-        Node<E> prev;
+        Node<E> prev = front;
         boolean removeOk;
+        int pos = 1;
 
 
         /**
@@ -246,7 +247,15 @@ public class CircularLinkedList<E> implements Iterable<E>  {
             E result = null;
             if (hasNext()) {
                 result = curr.data;
-                prev = curr;
+                if (pos > 3) {
+                    prev = prev.next;
+                }
+                if (pos == 2) {
+
+                }
+                if (pos == 1) {
+
+                }
                 if (curr == end) {
                     curr = front;
                 }
@@ -254,8 +263,18 @@ public class CircularLinkedList<E> implements Iterable<E>  {
                     curr = curr.next;
                 }
                 removeOk = true;
+                pos++;
             }
             return result;
+        }
+
+
+        public void remove() {
+            //Removes from the underlying collection the last element returned by this iterator
+            if (removeOk) {
+                prev.next = curr.next;
+                size--;
+            }
         }
     }
 
