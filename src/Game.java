@@ -65,10 +65,10 @@ public class Game {
             printHeading(highScore, roundCount);
             while ( pos < players.size() + 1) {
                 Player currPlayer = iter.next();
-                System.out.print(String.format("Current high = %d, ", highScore));
+                System.out.printf("Current high = %d, ", highScore);
 
                 if (currPlayer == topPlayer) {
-                    System.out.print(String.format("%s passes\n", currPlayer.getName()));
+                    System.out.printf("%s passes\n", currPlayer.getName());
                 }
                 else {
                     gameLogic(currPlayer);
@@ -95,7 +95,7 @@ public class Game {
             System.out.println("Start of game");
         }
         else {
-            System.out.println(String.format("New Round (%d)", roundCount));
+            System.out.printf("New Round (%d)%n", roundCount);
         }
     }
 
@@ -112,19 +112,19 @@ public class Game {
         if (currRoll >= highScore) {
             topPlayer = currPlayer;
             this.highScore = currRoll;
-            System.out.print(String.format("%s rolled a %d\n", currPlayer.getName(), currRoll));
+            System.out.printf("%s rolled a %d\n", currPlayer.getName(), currRoll);
         }
         else {
             currPlayer.addStrike();
             if(currPlayer.getStrikes() >= maxStrikes) {
-                System.out.print(String.format("%s rolled a %d, strike %d, out of the game!\n", currPlayer.getName(), currRoll,
-                        currPlayer.getStrikes()));
+                System.out.printf("%s rolled a %d, strike %d, out of the game!\n", currPlayer.getName(), currRoll,
+                        currPlayer.getStrikes());
                 clips.get(SoundClipManager.Fx.LOSS).play();
                 players.remove(currPlayer);
             }
             else {
-                System.out.print(String.format("%s rolled a %d, strike %d\n", currPlayer.getName(), currRoll,
-                        currPlayer.getStrikes()));
+                System.out.printf("%s rolled a %d, strike %d\n", currPlayer.getName(), currRoll,
+                        currPlayer.getStrikes());
                clips.get(SoundClipManager.Fx.STRIKE).play();
             }
 
@@ -132,8 +132,8 @@ public class Game {
     }
 
 
-    private void displayWinner(int highScorecore) {
-        System.out.println(String.format("Winner is %s with a roll of %d!", players.get(1).getName(), highScore));
+    private void displayWinner(int highScore) {
+        System.out.printf("Winner is %s with a roll of %d!%n", players.get(1).getName(), highScore);
         clips.get(SoundClipManager.Fx.WIN).play();
     }
 }
