@@ -3,13 +3,14 @@ import java.io.File;
 import java.io.IOException;
 import javax.sound.sampled.LineEvent.Type;
 
-public class Sound  {
+public class AudioClip {
     Clip clip;
-    public Sound(String filepath) {
+    AudioInputStream audioIn;
+    public AudioClip(String filepath) {
         File soundFx;
         try {
           soundFx = new File(filepath);
-          AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFx);
+          audioIn = AudioSystem.getAudioInputStream(soundFx);
           clip = AudioSystem.getClip();
           clip.open(audioIn);
         }
@@ -19,16 +20,17 @@ public class Sound  {
     }
 
 
-    public void play(){
+    public void play(){ ;
+        clip.setFramePosition(0);
         clip.start();
         try {
-            while(!clip.isRunning()){
-                Thread.sleep(3);
+            while (!clip.isRunning()){
+                Thread.sleep(1);
             }
-            while(clip.isRunning()) {
-                Thread.sleep(3);
+            while (clip.isRunning()) {
+                Thread.sleep(1);
             }
-            clip.close();
+
         }
         catch(Exception e) {
             e.printStackTrace();

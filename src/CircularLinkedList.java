@@ -32,7 +32,6 @@ public class CircularLinkedList<E> implements Iterable<E>  {
      */
     public void add(E data) {
         if (data == null) {
-            //todo: exception test
             throw new IllegalArgumentException("data cannot be null");
         }
 
@@ -174,7 +173,6 @@ public class CircularLinkedList<E> implements Iterable<E>  {
      */
     private void checkBounds(int pos) {
         if( pos < 1 || pos > size()) {
-            //todo: exception test
             String msg = String.format("The index must be between 1 and the size: %d, inclusive.", size());
             if (size < 1) {
                 msg = "Can't access items in a size 0 list.";

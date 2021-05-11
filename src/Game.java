@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -6,6 +7,8 @@ import java.util.Random;
  * @version 5/7/2021
  */
 public class Game {
+    /** used to convert seconds to milliseconds */
+    private static final int MS_FACTOR = 1000;
     /** amount of players playing the game */
     private int totalPlayers;
     /** max number of allowable strikes this game */
@@ -15,15 +18,14 @@ public class Game {
     /** collection of players */
     private CircularLinkedList<Player> players;
     /** generates dice rolls */
-    private Random rand = new Random();
+    private Random rand;
     /** player with highest score */
-    Player topPlayer = null;
+    Player topPlayer;
     /** current high score */
     int highScore;
-    /**  */
-    Sound win = new Sound("sounds\\winner.wav");
-    Sound strike = new Sound("sounds\\strike_out.wav");
-    Sound eliminated = new Sound("sounds\\elimination.wav");
+    /** sound effects for the game */
+    SoundClipManager clips;
+
 
     /**
      * constructs a game of "High or Tie"
@@ -39,8 +41,11 @@ public class Game {
         players = new CircularLinkedList<>();
         this.totalPlayers = totalPlayers;
         this.maxStrikes = maxStrikes;
-        turnDelayInMS = turnDelayInSecs * 1000;
+        turnDelayInMS = turnDelayInSecs * MS_FACTOR;
         highScore = 0;
+        topPlayer = null;
+        rand = new Random();
+        clips = new SoundClipManager();
         addPlayers();
 
     }
@@ -52,13 +57,14 @@ public class Game {
     public void play() {
         int roundCount = 0;
         //start of game
+        Iterator<Player> iter = players.iterator();
         while(players.size() > 1) {
             int pos = 1;
             roundCount++;
             //start of round
             printHeading(highScore, roundCount);
             while ( pos < players.size() + 1) {
-                Player currPlayer = players.get(pos);
+                Player currPlayer = iter.next();
                 System.out.print(String.format("Current high = %d, ", highScore));
 
                 if (currPlayer == topPlayer) {
@@ -72,7 +78,7 @@ public class Game {
                     Thread.sleep(turnDelayInMS);
                 }
                 catch(InterruptedException e) {
-                    //todo: is it always better to handle ourselves or is this a case to use @throws?
+                    //do nothing
                 }
 
             }
@@ -113,21 +119,22 @@ public class Game {
             if(currPlayer.getStrikes() >= maxStrikes) {
                 System.out.print(String.format("%s rolled a %d, strike %d, out of the game!\n", currPlayer.getName(), currRoll,
                         currPlayer.getStrikes()));
-                eliminated.play();
+                clips.get(SoundClipManager.Fx.LOSS).play();
                 players.remove(currPlayer);
             }
             else {
                 System.out.print(String.format("%s rolled a %d, strike %d\n", currPlayer.getName(), currRoll,
                         currPlayer.getStrikes()));
+               clips.get(SoundClipManager.Fx.STRIKE).play();
             }
 
         }
     }
 
 
-    private void displayWinner(int highscore) {
-        System.out.println(String.format("Winner is %s with a roll of %d!", players.get(1).getName(), highscore));
-        win.play();
+    private void displayWinner(int highScorecore) {
+        System.out.println(String.format("Winner is %s with a roll of %d!", players.get(1).getName(), highScore));
+        clips.get(SoundClipManager.Fx.WIN).play();
     }
 }
 
