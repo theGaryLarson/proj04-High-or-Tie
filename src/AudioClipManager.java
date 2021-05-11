@@ -6,13 +6,13 @@ import java.util.Map;
  * @author Gary Larson
  * @version 5/10/2021
  */
-public class SoundClipManager {
+public class AudioClipManager {
     private Map<Fx, AudioClip> clips;
 
     /**
      * constructs a sound manager
      */
-    public SoundClipManager() {
+    public AudioClipManager() {
         clips = new HashMap<>();
         clips.put(Fx.WIN, new AudioClip("sounds\\winner.wav"));
         clips.put(Fx.STRIKE, new AudioClip("sounds\\strike_out.wav"));

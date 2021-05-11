@@ -24,7 +24,7 @@ public class Game {
     /** current high score */
     int highScore;
     /** sound effects for the game */
-    SoundClipManager clips;
+    AudioClipManager clips;
 
 
     /**
@@ -45,7 +45,7 @@ public class Game {
         highScore = 0;
         topPlayer = null;
         rand = new Random();
-        clips = new SoundClipManager();
+        clips = new AudioClipManager();
         addPlayers();
 
     }
@@ -82,8 +82,7 @@ public class Game {
                 }
 
             }
-            System.out.println();
-            System.out.println();
+            System.out.print("\n\n");
         }
         displayWinner(highScore);
     }
@@ -119,13 +118,13 @@ public class Game {
             if(currPlayer.getStrikes() >= maxStrikes) {
                 System.out.printf("%s rolled a %d, strike %d, out of the game!\n", currPlayer.getName(), currRoll,
                         currPlayer.getStrikes());
-                clips.get(SoundClipManager.Fx.LOSS).play();
+                clips.get(AudioClipManager.Fx.LOSS).play();
                 players.remove(currPlayer);
             }
             else {
                 System.out.printf("%s rolled a %d, strike %d\n", currPlayer.getName(), currRoll,
                         currPlayer.getStrikes());
-               clips.get(SoundClipManager.Fx.STRIKE).play();
+               clips.get(AudioClipManager.Fx.STRIKE).play();
             }
 
         }
@@ -134,7 +133,7 @@ public class Game {
 
     private void displayWinner(int highScore) {
         System.out.printf("Winner is %s with a roll of %d!%n", players.get(1).getName(), highScore);
-        clips.get(SoundClipManager.Fx.WIN).play();
+        clips.get(AudioClipManager.Fx.WIN).play();
     }
 }
 
