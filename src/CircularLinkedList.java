@@ -60,7 +60,7 @@ public class CircularLinkedList<E> implements Iterable<E>  {
     public E get(int pos) {
         checkBounds(pos);
         Node<E> curr = front;
-        for (int counter = 1; counter < pos; counter++) {
+        for (int i = 1; i < pos; i++) {
             curr = curr.next;
         }
         return curr.data;
@@ -74,10 +74,13 @@ public class CircularLinkedList<E> implements Iterable<E>  {
     public void remove(int pos) {
         checkBounds(pos);
         Node<E> curr = front;
+        Node<E> prev = null;
+
         for (int i = 1; i < pos; i++) {
             prev = curr;
             curr = curr.next;
         }
+
         if (pos == 1) {
             front = curr.next;
             end.next = front;
@@ -102,6 +105,7 @@ public class CircularLinkedList<E> implements Iterable<E>  {
         boolean containsValue = true;
         Node<E> curr = front;
         int counter = 0;
+
         //empty list
         if (size == 0) {
             return false;
@@ -113,6 +117,7 @@ public class CircularLinkedList<E> implements Iterable<E>  {
             size--;
             return true;
         }
+
         //traverse for value
         while (curr.next.data != value && containsValue) {
             prev = curr;
@@ -122,9 +127,10 @@ public class CircularLinkedList<E> implements Iterable<E>  {
                 containsValue = false;
             }
         }
+
         if (containsValue) {
             //is it the front?
-            if (curr == front) {
+            if (curr.next == front) {
                 front = curr.next.next;
                 end.next = front;
             }
@@ -132,6 +138,7 @@ public class CircularLinkedList<E> implements Iterable<E>  {
             else if (curr.next == end) {
                 curr.next = front;
                 end = curr;
+
             }
             //is it the middle?
             else {
@@ -139,6 +146,7 @@ public class CircularLinkedList<E> implements Iterable<E>  {
             }
             size--;
         }
+
         return containsValue;
     }
 
@@ -207,8 +215,7 @@ public class CircularLinkedList<E> implements Iterable<E>  {
      */
     public class CircularLinkedListIterator implements Iterator<E> {
         Node<E> curr;
-        Node<E> prev;
-        Node<E> trail;
+        Node<E> prev = front;
         boolean removeOk;
         int pos = 1;
 
@@ -219,8 +226,6 @@ public class CircularLinkedList<E> implements Iterable<E>  {
         public CircularLinkedListIterator() {
             removeOk = false;
             curr = front;
-            prev = front;
-            trail = null;
         }
 
 
@@ -240,6 +245,15 @@ public class CircularLinkedList<E> implements Iterable<E>  {
             E result = null;
             if (hasNext()) {
                 result = curr.data;
+                if (pos > 3) {
+                    prev = prev.next;
+                }
+                if (pos == 2) {
+
+                }
+                if (pos == 1) {
+
+                }
                 if (curr == end) {
                     curr = front;
                 }
@@ -247,80 +261,18 @@ public class CircularLinkedList<E> implements Iterable<E>  {
                     curr = curr.next;
                 }
                 removeOk = true;
-                if ( pos >= 3) {
-                    trail = prev;
-                    prev = prev.next;
-                }
-                pos %= size + 1;
                 pos++;
             }
             return result;
         }
 
 
-        /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-         * removes from the underlying collection the last element returned by this iterator; throws IllegalStateException
-         * if next() hasn't been called
-=======
-         * removes from the underlying collection the last element returned by this iterator
->>>>>>> 3ff1ded26cfd2bfedb5020c940befeecf3541616
-=======
-         * removes from the underlying collection the last element returned by this iterator
->>>>>>> 3ff1ded26cfd2bfedb5020c940befeecf3541616
-         */
         public void remove() {
-            if (!removeOk) {
-                throw new IllegalStateException();
-            }
-<<<<<<< HEAD
-<<<<<<< HEAD
-            if (pos == 2) {
-                front = front.next;
-                end.next = front;
-            }
-            else if (pos == size + 1) {
-                end = trail.next;
-                end.next = front;
-            }
-            else {
-                prev.next = prev.next.next;
-            }
-            size--;
-=======
-=======
->>>>>>> 3ff1ded26cfd2bfedb5020c940befeecf3541616
-            int prevPos = pos - 1;
-            if ( prevPos > 4) {
-                prev = prev.next;
-            }
-            if (prevPos == 4) {
-                front.next.next.next = front.next.next.next.next.next;
-            }
-            if (prevPos < 4) {
-                switch(prevPos) {
-                    case 3:
-                        front.next.next = front.next.next.next;
-                        break;
-                    case 2:
-                        front.next = front.next.next;
-                        break;
-                    case 1:
-                        end.next = front.next;
-                        front = end.next;
-                }
-            }
-            else {
+            //Removes from the underlying collection the last element returned by this iterator
+            if (removeOk) {
                 prev.next = curr.next;
+                size--;
             }
-
-            size--;
-
-<<<<<<< HEAD
->>>>>>> 3ff1ded26cfd2bfedb5020c940befeecf3541616
-=======
->>>>>>> 3ff1ded26cfd2bfedb5020c940befeecf3541616
         }
     }
 
