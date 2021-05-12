@@ -214,8 +214,9 @@ public class CircularLinkedList<E> implements Iterable<E>  {
      * represents an Iterator for CircularLinkedList
      */
     public class CircularLinkedListIterator implements Iterator<E> {
-        Node<E> curr;
-        Node<E> prev = front;
+        private Node<E> curr;
+        private Node<E> prev;
+        private Node<E> trail;
         boolean removeOk;
         int pos = 1;
 
@@ -226,6 +227,8 @@ public class CircularLinkedList<E> implements Iterable<E>  {
         public CircularLinkedListIterator() {
             removeOk = false;
             curr = front;
+            prev = front;
+            trail = null;
         }
 
 
@@ -251,7 +254,12 @@ public class CircularLinkedList<E> implements Iterable<E>  {
                 else {
                     curr = curr.next;
                 }
+                if (pos >= 3) {
+                    trail = prev;
+                    prev = prev.next;
+                }
                 removeOk = true;
+                pos %= size + 1;
                 pos++;
             }
             return result;
@@ -261,34 +269,23 @@ public class CircularLinkedList<E> implements Iterable<E>  {
         /**
          * removes from the underlying collection the last element returned by this iterator
          */
+
         public void remove() {
             if (!removeOk) {
                 throw new IllegalStateException();
             }
-            int prevPos = pos - 1;
-            if ( prevPos > 4) {
-                prev = prev.next;
+            ;
+            if ( pos == 2) {
+                front = front.next;
+                end.next = front;
             }
-            if (prevPos == 4) {
-                front.next.next.next = front.next.next.next.next.next;
-            }
-            if (prevPos < 4) {
-                switch(prevPos) {
-                    case 3:
-                        front.next.next = front.next.next.next;
-                        break;
-                    case 2:
-                        front.next = front.next.next;
-                        break;
-                    case 1:
-                        end.next = front.next;
-                        front = end.next;
-                }
+            else if (pos == size + 1) {
+                end = trail.next;
+                end.next = front;
             }
             else {
-                prev.next = curr.next;
+                prev.next = prev.next.next;
             }
-
             size--;
 
         }
