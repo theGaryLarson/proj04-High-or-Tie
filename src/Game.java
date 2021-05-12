@@ -24,7 +24,20 @@ public class Game {
     /** current high score */
     private int highScore;
     /** sound effects for the game */
+<<<<<<< HEAD
     private AudioClipManager clips;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+    private AudioClipManager clips;
+=======
+    AudioClipManager clips;
+>>>>>>> 3ff1ded26cfd2bfedb5020c940befeecf3541616
+=======
+    AudioClipManager clips;
+>>>>>>> 3ff1ded26cfd2bfedb5020c940befeecf3541616
+
+>>>>>>> 62d784686d4c4c06e9392ebf5d3e12532efa4eeb
 
     /**
      * constructs a game of "High or Tie"
@@ -64,6 +77,16 @@ public class Game {
             while ( pos < players.size() + 1) {
                 Player currPlayer = iter.next();
                 System.out.printf("Current high = %d, ", highScore);
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 3ff1ded26cfd2bfedb5020c940befeecf3541616
+
+>>>>>>> 3ff1ded26cfd2bfedb5020c940befeecf3541616
+>>>>>>> 62d784686d4c4c06e9392ebf5d3e12532efa4eeb
                 if (currPlayer == topPlayer) {
                     System.out.printf("%s passes\n", currPlayer.getName());
                 }
