@@ -25,7 +25,11 @@ public class Game {
     private int highScore;
     /** sound effects for the game */
 <<<<<<< HEAD
+<<<<<<< HEAD
     private AudioClipManager clips;
+=======
+    AudioClipManager clips;
+>>>>>>> 3ff1ded26cfd2bfedb5020c940befeecf3541616
 =======
     AudioClipManager clips;
 >>>>>>> 3ff1ded26cfd2bfedb5020c940befeecf3541616
@@ -70,7 +74,10 @@ public class Game {
                 Player currPlayer = iter.next();
                 System.out.printf("Current high = %d, ", highScore);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 3ff1ded26cfd2bfedb5020c940befeecf3541616
 
 >>>>>>> 3ff1ded26cfd2bfedb5020c940befeecf3541616
                 if (currPlayer == topPlayer) {
