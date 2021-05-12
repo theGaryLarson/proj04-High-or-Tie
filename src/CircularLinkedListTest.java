@@ -234,6 +234,11 @@ class CircularLinkedListTest {
         assertEquals(6, iter.next());
         assertEquals(5, iter.next());
         assertEquals(3, iter.next());
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 3ff1ded26cfd2bfedb5020c940befeecf3541616
     }
 
 
@@ -246,6 +251,10 @@ class CircularLinkedListTest {
         myInts.add(3);
         myInts.add(2);
         myInts.add(1);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3ff1ded26cfd2bfedb5020c940befeecf3541616
         Iterator<Integer> iter = myInts.iterator();
         iter.next();
         iter.next();
@@ -267,6 +276,10 @@ class CircularLinkedListTest {
         myInts.add(6);
         myInts.add(2);
         myInts.add(1);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3ff1ded26cfd2bfedb5020c940befeecf3541616
         Iterator<Integer> iter = myInts.iterator();
         iter.next();
         iter.next();
@@ -281,20 +294,35 @@ class CircularLinkedListTest {
     @Test
     void iteratorRemoveLastElementSize4() {
         CircularLinkedList<Integer> myInts = new CircularLinkedList<>();
+<<<<<<< HEAD
         myInts.add(1);
         myInts.add(2);
         myInts.add(3);
         myInts.add(4);
+=======
+        myInts.add(6);
+        myInts.add(5);
+        myInts.add(2);
+        myInts.add(1);
+
+>>>>>>> 3ff1ded26cfd2bfedb5020c940befeecf3541616
         Iterator<Integer> iter = myInts.iterator();
         iter.next();
         iter.next();
         iter.next();
         iter.next();
         iter.remove();
+<<<<<<< HEAD
         assertEquals(1, iter.next());
         assertEquals(2, iter.next());
         assertEquals(3, iter.next());
         assertEquals(1, iter.next());
+=======
+        assertEquals(6, iter.next());
+        assertEquals(5, iter.next());
+        assertEquals(2, iter.next());
+        assertEquals(6, iter.next());
+>>>>>>> 3ff1ded26cfd2bfedb5020c940befeecf3541616
     }
 
     ////////////////////////////////////////////////////////////////////
@@ -324,8 +352,16 @@ class CircularLinkedListTest {
     void iteratorRemoveWithoutNext() {
         CircularLinkedList<Integer> myInts = new CircularLinkedList<>();
         Iterator<Integer> iter = myInts.iterator();
+<<<<<<< HEAD
         assertThrows(IllegalStateException.class, () -> {
                 iter.remove();
         });
+=======
+
+        assertThrows(IllegalStateException.class, () -> {
+                iter.remove();
+        });
+
+>>>>>>> 3ff1ded26cfd2bfedb5020c940befeecf3541616
     }
 }
