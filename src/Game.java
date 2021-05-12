@@ -20,11 +20,11 @@ public class Game {
     /** generates dice rolls */
     private Random rand;
     /** player with highest score */
-    Player topPlayer;
+    private Player topPlayer;
     /** current high score */
-    int highScore;
+    private int highScore;
     /** sound effects for the game */
-    SoundClipManager clips;
+    private AudioClipManager clips;
 
 
     /**
@@ -45,9 +45,8 @@ public class Game {
         highScore = 0;
         topPlayer = null;
         rand = new Random();
-        clips = new SoundClipManager();
+        clips = new AudioClipManager();
         addPlayers();
-
     }
 
 
@@ -58,17 +57,16 @@ public class Game {
         int roundCount = 0;
         //start of game
         Iterator<Player> iter = players.iterator();
-        while(players.size() > 1) {
+        while(iter.hasNext()) {
             int pos = 1;
             roundCount++;
             //start of round
             printHeading(highScore, roundCount);
             while ( pos < players.size() + 1) {
                 Player currPlayer = iter.next();
-                System.out.print(String.format("Current high = %d, ", highScore));
-
+                System.out.printf("Current high = %d, ", highScore);
                 if (currPlayer == topPlayer) {
-                    System.out.print(String.format("%s passes\n", currPlayer.getName()));
+                    System.out.printf("%s passes\n", currPlayer.getName());
                 }
                 else {
                     gameLogic(currPlayer);
@@ -80,26 +78,31 @@ public class Game {
                 catch(InterruptedException e) {
                     //do nothing
                 }
-
             }
-            System.out.println();
-            System.out.println();
+            System.out.print("\n\n");
         }
         displayWinner(highScore);
     }
 
 
-
+    /**
+     * prints the heading for the given round
+     * @param highScore flag for first round
+     * @param roundCount tracks the number of rounds
+     */
     private void printHeading(int highScore, int roundCount) {
         if (highScore == 0) {
             System.out.println("Start of game");
         }
         else {
-            System.out.println(String.format("New Round (%d)", roundCount));
+            System.out.printf("New Round (%d)%n", roundCount);
         }
     }
 
 
+    /**
+     * adds player to the collection
+     */
     private void addPlayers() {
         for (int i = 1; i < totalPlayers + 1; i++) {
             players.add(new Player("Player" + i));
@@ -107,34 +110,38 @@ public class Game {
     }
 
 
+    /**
+     * the bulk of the game logic
+     * @param currPlayer target player
+     */
     private void gameLogic(Player currPlayer) {
         int currRoll = rand.nextInt(100) + 1;
         if (currRoll >= highScore) {
             topPlayer = currPlayer;
             this.highScore = currRoll;
-            System.out.print(String.format("%s rolled a %d\n", currPlayer.getName(), currRoll));
+            System.out.printf("%s rolled a %d\n", currPlayer.getName(), currRoll);
         }
         else {
             currPlayer.addStrike();
             if(currPlayer.getStrikes() >= maxStrikes) {
-                System.out.print(String.format("%s rolled a %d, strike %d, out of the game!\n", currPlayer.getName(), currRoll,
-                        currPlayer.getStrikes()));
-                clips.get(SoundClipManager.Fx.LOSS).play();
+                System.out.printf("%s rolled a %d, strike %d, out of the game!\n", currPlayer.getName(), currRoll,
+                        currPlayer.getStrikes());
+                clips.get(AudioClipManager.Fx.LOSS).play();
                 players.remove(currPlayer);
             }
             else {
-                System.out.print(String.format("%s rolled a %d, strike %d\n", currPlayer.getName(), currRoll,
-                        currPlayer.getStrikes()));
-               clips.get(SoundClipManager.Fx.STRIKE).play();
+                System.out.printf("%s rolled a %d, strike %d\n", currPlayer.getName(), currRoll,
+                        currPlayer.getStrikes());
+               clips.get(AudioClipManager.Fx.STRIKE).play();
             }
 
         }
     }
 
 
-    private void displayWinner(int highScorecore) {
-        System.out.println(String.format("Winner is %s with a roll of %d!", players.get(1).getName(), highScore));
-        clips.get(SoundClipManager.Fx.WIN).play();
+    private void displayWinner(int highScore) {
+        System.out.printf("Winner is %s with a roll of %d!%n", players.get(1).getName(), highScore);
+        clips.get(AudioClipManager.Fx.WIN).play();
     }
 }
 
