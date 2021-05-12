@@ -10,9 +10,9 @@ import javax.sound.sampled.LineEvent.Type;
  */
 public class AudioClip {
     /** holds our audio for playback */
-    Clip clip;
+    private Clip clip;
     /** transfers our wave file into a stream */
-    AudioInputStream audioIn;
+    private AudioInputStream audioIn;
 
     /**
      * constructs an audio clip

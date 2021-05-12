@@ -103,6 +103,7 @@ class CircularLinkedListTest {
         assertEquals(false,myInts.remove("4"));
     }
 
+
     @Test
     void removeFirstValue() {
         CircularLinkedList<String> myInts = new CircularLinkedList<>();
@@ -134,7 +135,18 @@ class CircularLinkedListTest {
         myInts.add("2");
         myInts.add("3");
         myInts.remove("3");
-        assertEquals(2, myInts.size());
+        Iterator<String> iter = myInts.iterator();
+        assertEquals("1", iter.next());
+        assertEquals("2", iter.next());
+        assertEquals("1", iter.next());
+
+        myInts.add("3");
+        myInts.add("5");
+        myInts.add("6");
+        myInts.add("7");
+        myInts.remove("7");
+        assertEquals("1", iter.next());
+
     }
 
 
@@ -223,7 +235,6 @@ class CircularLinkedListTest {
         assertEquals(5, iter.next());
         assertEquals(3, iter.next());
 
-
     }
 
 
@@ -236,7 +247,6 @@ class CircularLinkedListTest {
         myInts.add(3);
         myInts.add(2);
         myInts.add(1);
-
         Iterator<Integer> iter = myInts.iterator();
         iter.next();
         iter.next();
@@ -252,13 +262,13 @@ class CircularLinkedListTest {
     }
 
 
+
     @Test
     void iteratorRemoveLastElementSize3() {
         CircularLinkedList<Integer> myInts = new CircularLinkedList<>();
         myInts.add(6);
         myInts.add(2);
         myInts.add(1);
-
         Iterator<Integer> iter = myInts.iterator();
         iter.next();
         iter.next();
@@ -273,17 +283,24 @@ class CircularLinkedListTest {
     @Test
     void iteratorRemoveLastElementSize4() {
         CircularLinkedList<Integer> myInts = new CircularLinkedList<>();
+        myInts.add(1);
+        myInts.add(2);
+        myInts.add(3);
+        myInts.add(4);
         myInts.add(6);
         myInts.add(5);
         myInts.add(2);
         myInts.add(1);
-
         Iterator<Integer> iter = myInts.iterator();
         iter.next();
         iter.next();
         iter.next();
         iter.next();
         iter.remove();
+        assertEquals(1, iter.next());
+        assertEquals(2, iter.next());
+        assertEquals(3, iter.next());
+        assertEquals(1, iter.next());
         assertEquals(6, iter.next());
         assertEquals(5, iter.next());
         assertEquals(2, iter.next());
@@ -317,10 +334,11 @@ class CircularLinkedListTest {
     void iteratorRemoveWithoutNext() {
         CircularLinkedList<Integer> myInts = new CircularLinkedList<>();
         Iterator<Integer> iter = myInts.iterator();
-
         assertThrows(IllegalStateException.class, () -> {
                 iter.remove();
         });
-
+        assertThrows(IllegalStateException.class, () -> {
+                iter.remove();
+        });
     }
 }

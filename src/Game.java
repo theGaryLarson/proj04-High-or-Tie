@@ -20,12 +20,11 @@ public class Game {
     /** generates dice rolls */
     private Random rand;
     /** player with highest score */
-    Player topPlayer;
+    private Player topPlayer;
     /** current high score */
-    int highScore;
+    private int highScore;
     /** sound effects for the game */
-    AudioClipManager clips;
-
+    private AudioClipManager clips;
 
     /**
      * constructs a game of "High or Tie"
@@ -47,7 +46,6 @@ public class Game {
         rand = new Random();
         clips = new AudioClipManager();
         addPlayers();
-
     }
 
 
@@ -58,7 +56,7 @@ public class Game {
         int roundCount = 0;
         //start of game
         Iterator<Player> iter = players.iterator();
-        while(players.size() > 1) {
+        while(iter.hasNext()) {
             int pos = 1;
             roundCount++;
             //start of round
@@ -66,7 +64,6 @@ public class Game {
             while ( pos < players.size() + 1) {
                 Player currPlayer = iter.next();
                 System.out.printf("Current high = %d, ", highScore);
-
                 if (currPlayer == topPlayer) {
                     System.out.printf("%s passes\n", currPlayer.getName());
                 }
@@ -80,7 +77,6 @@ public class Game {
                 catch(InterruptedException e) {
                     //do nothing
                 }
-
             }
             System.out.print("\n\n");
         }
@@ -88,7 +84,11 @@ public class Game {
     }
 
 
-
+    /**
+     * prints the heading for the given round
+     * @param highScore flag for first round
+     * @param roundCount tracks the number of rounds
+     */
     private void printHeading(int highScore, int roundCount) {
         if (highScore == 0) {
             System.out.println("Start of game");
@@ -99,6 +99,9 @@ public class Game {
     }
 
 
+    /**
+     * adds player to the collection
+     */
     private void addPlayers() {
         for (int i = 1; i < totalPlayers + 1; i++) {
             players.add(new Player("Player" + i));
@@ -106,6 +109,10 @@ public class Game {
     }
 
 
+    /**
+     * the bulk of the game logic
+     * @param currPlayer target player
+     */
     private void gameLogic(Player currPlayer) {
         int currRoll = rand.nextInt(100) + 1;
         if (currRoll >= highScore) {
