@@ -7,7 +7,8 @@ import java.util.Map;
  * @version 5/10/2021
  */
 public class AudioClipManager {
-    private Map<Fx, AudioClip> clips;
+    /** map containing sound effects for game */
+    private final Map<Fx, AudioClip> clips;
 
     /**
      * constructs a sound manager
@@ -16,7 +17,9 @@ public class AudioClipManager {
         clips = new HashMap<>();
         clips.put(Fx.WIN, new AudioClip("sounds\\winner.wav"));
         clips.put(Fx.STRIKE, new AudioClip("sounds\\strike_out.wav"));
-        clips.put(Fx.LOSS, new AudioClip("sounds\\elimination.wav"));
+        clips.put(Fx.LOSS, new AudioClip("sounds\\loss.wav"));
+        clips.put(Fx.PASS, new AudioClip("sounds\\pass.wav"));
+        clips.put(Fx.TURN, new AudioClip("sounds\\turn.wav"));
     }
 
 
@@ -36,6 +39,8 @@ public class AudioClipManager {
     public enum Fx {
         WIN,
         STRIKE,
-        LOSS
+        LOSS,
+        PASS,
+        TURN
     }
 }

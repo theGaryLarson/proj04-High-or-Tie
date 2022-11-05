@@ -10,21 +10,21 @@ public class Game {
     /** used to convert seconds to milliseconds */
     private static final int MS_FACTOR = 1000;
     /** amount of players playing the game */
-    private int totalPlayers;
+    private final int totalPlayers;
     /** max number of allowable strikes this game */
-    private int maxStrikes;
+    private final int maxStrikes;
     /** the delay between player turns (in seconds) */
-    private int turnDelayInMS;
+    private final int turnDelayInMS;
     /** collection of players */
-    private CircularLinkedList<Player> players;
+    private final CircularLinkedList<Player> players;
     /** generates dice rolls */
-    private Random rand;
-    /** player with highest score */
+    private final Random rand;
+    /** player with the highest score */
     private Player topPlayer;
     /** current high score */
     private int highScore;
     /** sound effects for the game */
-    private AudioClipManager clips;
+    private final AudioClipManager clips;
 
 
     /**
@@ -44,9 +44,10 @@ public class Game {
         turnDelayInMS = turnDelayInSecs * MS_FACTOR;
         highScore = 0;
         topPlayer = null;
-        rand = new Random();
+        rand = new Random(1);
         clips = new AudioClipManager();
         addPlayers();
+
     }
 
 
@@ -68,6 +69,7 @@ public class Game {
 
                 if (currPlayer == topPlayer) {
                     System.out.printf("%s passes\n", currPlayer.getName());
+                    clips.get(AudioClipManager.Fx.PASS).play();
                 }
                 else {
                     gameLogic(currPlayer);
@@ -119,8 +121,9 @@ public class Game {
         int currRoll = rand.nextInt(100) + 1;
         if (currRoll >= highScore) {
             topPlayer = currPlayer;
-            this.highScore = currRoll;
+            highScore = currRoll;
             System.out.printf("%s rolled a %d\n", currPlayer.getName(), currRoll);
+            clips.get(AudioClipManager.Fx.TURN).play();
         }
         else {
             currPlayer.addStrike();
@@ -144,7 +147,7 @@ public class Game {
      * @param highScore winning score
      */
     private void displayWinner(int highScore) {
-        System.out.printf("Winner is %s with a roll of %d!%n", players.get(1).getName(), highScore);
+        System.out.printf("Winner is %s with a roll of %d!%n", players.get(0).getName(), highScore);
         clips.get(AudioClipManager.Fx.WIN).play();
     }
 }

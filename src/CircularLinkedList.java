@@ -8,8 +8,6 @@ import java.util.Iterator;
 public class CircularLinkedList<E> implements Iterable<E>  {
     /** reference pointer to the beginning of the list */
     private Node<E> front;
-    /** lazy pointer used in remove */
-    private Node<E> prev;
     /** reference pointer to the end of the list */
     private Node<E> end;
     /** number of elements in the list */
@@ -60,7 +58,7 @@ public class CircularLinkedList<E> implements Iterable<E>  {
     public E get(int pos) {
         checkBounds(pos);
         Node<E> curr = front;
-        for (int i = 1; i < pos; i++) {
+        for (int i = 0; i < pos; i++) {
             curr = curr.next;
         }
         return curr.data;
@@ -76,20 +74,21 @@ public class CircularLinkedList<E> implements Iterable<E>  {
         Node<E> curr = front;
         Node<E> prev = null;
 
-        for (int i = 1; i < pos; i++) {
+        for (int i = 0; i < pos; i++) {
             prev = curr;
             curr = curr.next;
         }
 
-        if (pos == 1) {
+        if (pos == 0) {
             front = curr.next;
             end.next = front;
         }
-        else if (pos == size) {
+        else if (pos == size - 1) {
            curr.next = front;
            end = curr;
         }
         else {
+            assert prev != null;
             prev.next = curr.next;
         }
         size--;
@@ -117,17 +116,14 @@ public class CircularLinkedList<E> implements Iterable<E>  {
             size--;
             return true;
         }
-
         //traverse for value
         while (curr.next.data != value && containsValue) {
-            prev = curr;
             curr = curr.next;
             counter++;
             if (counter > size) {
                 containsValue = false;
             }
         }
-
         if (containsValue) {
             //is it the front?
             if (curr.next == front) {
@@ -146,9 +142,9 @@ public class CircularLinkedList<E> implements Iterable<E>  {
             }
             size--;
         }
-
         return containsValue;
     }
+
 
     /**
      * clears the list of all elements
@@ -157,6 +153,7 @@ public class CircularLinkedList<E> implements Iterable<E>  {
         front = null;
         size = 0;
     }
+
 
     /**
      * size of the list
@@ -172,12 +169,8 @@ public class CircularLinkedList<E> implements Iterable<E>  {
      * @param pos desired position
      */
     private void checkBounds(int pos) {
-        if( pos < 1 || pos > size()) {
-            String msg = String.format("The index must be between 1 and the size: %d, inclusive.", size());
-            if (size < 1) {
-                msg = "Can't access items in a size 0 list.";
-            }
-            throw new IndexOutOfBoundsException(msg);
+        if( pos < 0 || pos > size() - 1) {
+            throw new IndexOutOfBoundsException();
         }
     }
 
@@ -190,13 +183,17 @@ public class CircularLinkedList<E> implements Iterable<E>  {
         return new CircularLinkedListIterator();
     }
 
+
     /**
      * represents a node to store data
      * @param <T> given Type
      */
     private static class Node<T> {
+        /** value stored by user */
         public T data;
+        /** the next node in the list */
         public Node<T> next;
+
 
         /**
          * constructs a Node
@@ -205,7 +202,6 @@ public class CircularLinkedList<E> implements Iterable<E>  {
         public Node(T data) {
             this.data = data;
             next = null;
-
         }
     }
 
@@ -214,10 +210,15 @@ public class CircularLinkedList<E> implements Iterable<E>  {
      * represents an Iterator for CircularLinkedList
      */
     public class CircularLinkedListIterator implements Iterator<E> {
+        /** current node  */
         private Node<E> curr;
+        /** previous node */
         private Node<E> prev;
+        /** node following previous */
         private Node<E> trail;
+        /** flag for removal */
         boolean removeOk;
+        /** conditional for where we are in the list at a given time */
         int pos = 1;
 
 
@@ -259,7 +260,7 @@ public class CircularLinkedList<E> implements Iterable<E>  {
                     prev = prev.next;
                 }
                 removeOk = true;
-                pos %= size + 1;
+                pos = (pos % size + 1);
                 pos++;
             }
             return result;
@@ -274,8 +275,7 @@ public class CircularLinkedList<E> implements Iterable<E>  {
             if (!removeOk) {
                 throw new IllegalStateException();
             }
-            ;
-            if ( pos == 2) {
+            if ( pos == 1) {
                 front = front.next;
                 end.next = front;
             }
