@@ -11,8 +11,8 @@ The loop through the CLL ends when the game is won with one player remaining. Ea
 implemented in my CLL class. 
 
 ### Class Diagram
-[class diagram](readMeImages/umlClassDiagram.png)
+[](readMeImages/umlClassDiagram.png)
 
 ### Object Diagram
-[object diagram](readMeImages/umlObjectDiagram.png)
+[](readMeImages/umlObjectDiagram.png)
     
